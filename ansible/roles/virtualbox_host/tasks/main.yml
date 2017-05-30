@@ -1,0 +1,19 @@
+- name: Install virtualbox and vagrant
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - virtualbox-host-modules-arch
+    - virtualbox
+    - net-tools
+    - vagrant
+
+- name: Enable and load virtualbox modules
+  modprobe:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - vboxdrv
+    - vboxnetadp
+    - vboxnetflt
+    - vboxpci

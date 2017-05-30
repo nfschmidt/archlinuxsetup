@@ -1,0 +1,35 @@
+- include: x11.yml
+- include: lightdm.yml
+- include: terminator.yml
+
+- name: Install thunar
+  pacman:
+    name: thunar
+    state: present
+
+- name: Install firefox
+  pacman:
+    name: firefox
+    state: present
+
+- name: Install transmission
+  pacman:
+    name: transmission-gtk
+    state: present
+
+- name: Install office software
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - calibre
+    - evince
+
+- name: Install multimedia software
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - mirage
+    - vlc
+    - alsa-utils

@@ -1,0 +1,68 @@
+- name: Enable virtio modules
+  lineinfile:
+    dest: /etc/modules-load.d/virtio.conf
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - virtio-net
+    - virtio-blk
+    - virtio-scsi
+    - virtio-balloon
+
+- name: Start virtio modules
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - virtio-net
+    - virtio-blk
+    - virtio-scsi
+    - virtio-balloon
+
+- name: Enable nested virtualization
+  lineinfile:
+    dest: /etc/modprobe.d/modprobe.conf
+    line: "options kvm_intel nested=1"
+    create: yes
+
+- name: Install QEMU
+  pacman:
+    name: qemu
+    state: present
+
+- name: Install libvirt and libvirt clients
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libvirt
+    - virt-manager
+    - virt-viewer
+
+- name: Install network connectivity dependencies
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ebtables
+    - dnsmasq
+    - bridge-utils
+    - firewalld
+
+- name: Enable and start firewalld
+  systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: Enable and start libvirtd
+  systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
+
+- name: 'Add {{ username }} to libvirt group'
+  user:
+    name: '{{ username }}'
+    append: yes
+    groups: libvirt

@@ -1,0 +1,35 @@
+- name: Install neovim
+  pacman:
+    name: neovim
+    state: present
+
+- name: Create nvim autoload dir
+  file:
+    path: '{{ user_home}}/.local/share/nvim/site/autoload'
+    state: directory
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    mode: 0700
+
+- name: Download vim-plug
+  get_url:
+    url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    dest: '{{ user_home }}/.local/share/nvim/site/autoload/plug.vim'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    mode: 0600
+
+- name: Create config directory
+  file:
+    path: '{{user_home}}/.config/nvim'
+    state: directory
+
+- name: Configure neovim
+  copy:
+    src: init.vim
+    dest: '{{user_home}}/.config/nvim/init.vim'
+  register: neovim
+
+- name: Install plugins
+  command: 'nvim +PlugInstall +qall'
+  when: neovim.changed

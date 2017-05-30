@@ -1,0 +1,9 @@
+- name: Clone radare2 repo
+  git: 
+    repo: https://github.com/radare/radare2.git 
+    dest: /opt/radare2
+
+- name: Install radare2
+  command: /opt/radare2/sys/install.sh
+  args:
+    creates: /usr/bin/radare2

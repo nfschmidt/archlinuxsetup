@@ -1,0 +1,5 @@
+- name: Copy /etc/locale.gen
+  copy:
+    src: locale.gen
+    dest: /etc/locale.gen
+    validate: "locale-gen %s"

@@ -1,0 +1,28 @@
+- name: install zsh
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - zsh
+    - zsh-completions
+
+- name: set zsh as shell for user
+  user:
+    user: '{{ username }}'
+    shell: /bin/zsh
+
+- name: configure zsh
+  copy:
+    src: 'zsh/.zshrc'
+    dest: '{{ user_home }}/.zshrc'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    mode: '0600'
+
+- name: install oh-my-zsh
+  git:
+    repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+    clone: yes
+    dest: '{{ user_home }}/.oh-my-zsh'
+  become: yes
+  become_user: '{{ username }}'

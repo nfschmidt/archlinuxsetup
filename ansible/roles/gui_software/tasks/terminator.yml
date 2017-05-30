@@ -1,0 +1,12 @@
+- name: Install terminator
+  pacman:
+    name: terminator
+
+- name: Configure terminator
+  copy:
+    src: terminator
+    dest: '{{ user_home }}/.config/terminator'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    directory_mode: '0700'
+    mode: '0600'

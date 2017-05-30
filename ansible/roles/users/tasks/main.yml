@@ -1,0 +1,11 @@
+- name: 'Create group {{ user_group }}'
+  group:
+    name: '{{ user_group }}'
+    gid: 1000
+
+- name: 'Create user {{ username }}'
+  user: 
+    name: '{{ username }}'
+    uid: 1000
+    group: '{{ user_group }}'
+    home: '{{ user_home }}'

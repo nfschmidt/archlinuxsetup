@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  remote_user: root
+  roles:
+    - config
+    - { role: system_configs, tags: ['system_configs'] }
+    - { role: users, tags: ['users'] }
+    - { role: common_software, tags: ['common_software'] }
+    - { role: docker, tags: ['docker'], when: 'docker_host' }
+    - { role: python, tags: ['python'] }
+    - { role: hacking_mode, tags: ['hacking_mode'], when: 'hacking_mode' }
+    - { role: gui_software, tags: ['gui_software', 'graphical_mode'], when: 'graphical_mode' }
+    - { role: kvm, tags: ['kvm'], when: 'kvm_host' }
+    - { role: virtualbox_host, tags: ['virtualbox'], when: 'virtualbox_host' }
+    - { role: kde, tags: ['graphical_mode', 'kde'], when: 'graphical_mode and window_manager == "kde"' }
+    - { role: xmonad, tags: ['graphical_mode', 'xmonad'], when: 'graphical_mode and window_manager == "xmonad"' }
+    - { role: i3, tags: ['graphical_mode', 'i3'], when: 'graphical_mode and window_manager == "i3"' }
+    - { role: networkmanager, tags: ['networkmanager'], when: network_manager }
+    - { role: ssh_server, tags: ['ssh_server'], when: ssh_server }

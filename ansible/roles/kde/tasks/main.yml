@@ -1,0 +1,14 @@
+- name: Install KDE
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - plasma-meta
+    - plasma-nm
+
+- name: Disable baloo indexer
+  shell: balooctl disable && balooctl stop && touch '{{ user_home }}/.config/kde_baloo_disabled'
+  args:
+    creates: '{{ user_home }}/.config/kde_baloo_disabled'
+  become: yes
+  become_user: '{{ username }}'

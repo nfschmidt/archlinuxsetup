@@ -1,0 +1,37 @@
+#######################################
+# Graphical mode configurations
+#######################################
+graphical_mode: yes
+autostart_graphics: yes
+window_manager: i3
+
+#######################################
+# Virtualization configurations
+#######################################
+docker_host: yes
+kvm_host: no
+kvm_guest: no
+virtualbox_host: yes
+virtualbox_guest: no
+
+#######################################
+# Local user configurations
+#######################################
+username: nico
+user_group: nico
+user_home: '/home/{{ username }}'
+ 
+#######################################
+# Network Configuration
+#######################################
+network_manager: no
+
+#######################################
+# Hacking mode configurations
+#######################################
+hacking_mode: yes
+
+#######################################
+# Ssh server
+#######################################
+ssh_server: no

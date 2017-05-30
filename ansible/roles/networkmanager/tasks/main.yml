@@ -1,0 +1,16 @@
+- name: Install networkmanager
+  pacman:
+    name: networkmanager
+    state: present
+
+- name: Disable and stop dhcpcd
+  systemd:
+    name: dhcpcd
+    enabled: no
+    state: stopped
+
+- name: Enable and start NetworkManager
+  systemd:
+    name: NetworkManager
+    enabled: yes
+    state: started

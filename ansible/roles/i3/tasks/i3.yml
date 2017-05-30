@@ -1,0 +1,20 @@
+- name: Install i3
+  pacman:
+    name: i3
+    state: present
+
+- name: create config dir
+  file:
+    path: '{{ user_home }}/.config/i3'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    mode: "0700"
+    state: directory
+
+- name: copy config files
+  copy:
+    src: config
+    dest: '{{ user_home }}/.config/i3/config'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    mode: "0400"

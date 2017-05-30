@@ -1,0 +1,99 @@
+- hosts: localhost
+
+  vars:
+    root_partition: /dev/sda1
+    home_partition: /dev/sda5
+    swap_partition: /dev/sda6
+
+  tasks:
+    - name: Update the system clock
+      command: timedatectl set-ntp true
+
+    - name: Check if root partition was formated
+      stat:
+        path: /tmp/formated.tmp
+      register: already_formated
+
+    - name: Format root partition
+      command: mkfs.ext4 -F '{{ root_partition }}'
+      when: not already_formated.stat.exists
+      register: was_formated
+
+    - name: Register root format
+      file:
+        path: /tmp/formated.tmp
+        state: touch
+      when: was_formated is defined
+
+    - name: Mount root partition
+      mount:
+        name: /mnt
+        src: '{{ root_partition }}'
+        state: mounted
+        fstype: ext4
+
+    - name: Mount home partition
+      mount:
+        name: /mnt/home
+        src: '{{ home_partition }}'
+        state: mounted
+        fstype: ext4
+
+    - name: Check if swap is enabled
+      shell: 'swapon | grep {{ swap_partition }}'
+      ignore_errors: yes
+      register: swapon
+      changed_when: 'swapon.rc != 0'
+      failed_when: false
+
+    - name: Enable swap
+      command: swapon '{{ swap_partition }}'
+      when: 'swapon.rc != 0'
+
+    - name: Check if packages have already been installed
+      stat:
+        path: /tmp/packages.tmp
+      register: already_installed
+
+    - name: Install packages
+      command: pacstrap /mnt base dialog iw wpa_supplicant wpa_actiond ifplugd ansible grub 
+      register: packages_installed
+      when: not already_installed.stat.exists
+
+    - name: Register packages installation
+      file:
+        path: /tmp/packages.tmp
+        state: touch
+      when: packages_installed is defined
+
+    - name: generate fstab
+      shell: genfstab -U /mnt >> /mnt/etc/fstab
+
+    - name: Configure timezone
+      command: arch-chroot /mnt ln -fs /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime
+
+    - name: Configure locales
+      lineinfile:
+        dest: /mnt/etc/locale.gen
+        line: "en_US.UTF-8 UTF-8"
+      register: locale
+
+    - name: Generate locales
+      shell: arch-chroot /mnt locale-gen
+      when: locale is defined
+        
+
+    - name: Add LANG variable
+      lineinfile:
+        dest: /mnt/etc/locale.conf
+        line: 'LANG=en_US.UTF-8'
+        create: yes
+
+    - name: Initramfs
+      command: arch-chroot /mnt mkinitcpio -p linux
+
+    - name: Install grub
+      command: arch-chroot /mnt grub-install /dev/sda
+
+    - name: Configure grub
+      command: arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg

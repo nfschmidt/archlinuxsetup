@@ -1,0 +1,35 @@
+- name: Install xmonad
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - xmonad
+    - xmonad-contrib
+    - dmenu
+    - xmobar
+    - stalonetray
+    - network-manager-applet
+
+- name: Create configuration dir
+  file:
+    path: '{{ user_home }}/.xmonad'
+    state: directory
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+
+- name: Copy configuration files
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+  with_items:
+    - { src: xmonad.hs, dest: '{{ user_home }}/.xmonad/xmonad.hs' }
+    - { src: xmobarrc, dest: '{{ user_home }}/.xmobarrc' }
+ 
+- name: Configure stalonetray
+  copy: 
+    src: stalonetrayrc
+    dest: '{{ user_home }}/.stalonetrayrc'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'

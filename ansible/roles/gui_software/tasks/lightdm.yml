@@ -1,0 +1,14 @@
+- name: Install LightDM
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - lightdm
+    - lightdm-gtk-greeter
+
+- name: Enable lightdm
+  systemd:
+    name: lightdm.service
+    enabled: yes
+  when: autostart_graphics
+

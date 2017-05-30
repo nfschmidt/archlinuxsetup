@@ -1,0 +1,8 @@
+- include: "sudo.yml"
+- include: "ssh.yml"
+- include: "tmux.yml"
+- include: "neovim.yml"
+- include: "git.yml"
+- include: "archivers.yml"
+- include: "filesystems.yml"
+- include: "zsh.yml"

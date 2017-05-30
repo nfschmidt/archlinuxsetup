@@ -1,0 +1,9 @@
+- name: Install archivers and extractors
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - unrar
+    - unzip
+    - zip
+    - p7zip

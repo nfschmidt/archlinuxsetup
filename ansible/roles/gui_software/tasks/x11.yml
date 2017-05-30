@@ -1,0 +1,21 @@
+- name: Install Xorg server
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - xorg-server
+    - xorg-xinit
+    - xterm
+    - xf86-video-intel
+    - xf86-input-synaptics
+    - ttf-dejavu
+
+- name: configure keyboard layout
+  command: localectl set-x11-keymap latam
+  args:
+    creates: /etc/X11/xorg.conf.d/00-keyboard.conf
+
+- name: Install additional X11 utilities
+  pacman:
+    name: xorg-xbacklight
+    state: present
