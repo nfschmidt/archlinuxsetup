@@ -2,3 +2,11 @@
   pacman:
     name: tmux
     state: present
+
+- name: Configure tmux
+  copy:
+    src: tmux/tmux.conf
+    dest: '{{ user_home }}/.tmux.conf'
+    owner: '{{ username }}'
+    group: '{{ user_group }}'
+    mode: '0400'
