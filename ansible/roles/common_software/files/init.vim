@@ -69,4 +69,5 @@ let g:user_emmet_settings = {
 autocmd Filetype html,css setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype yml,yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype sh setlocal ts=4 sts=4 sw=4 expandtab
 
