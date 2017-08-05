@@ -6,3 +6,4 @@
 - include: "archivers.yml"
 - include: "filesystems.yml"
 - include: "zsh.yml"
+- include: "ranger.yml"

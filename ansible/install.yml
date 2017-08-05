@@ -4,6 +4,7 @@
   remote_user: root
   roles:
     - config
+    - { role: upgrade, tags: ['upgrade'], when: 'upgrade' }
     - { role: system_configs, tags: ['system_configs'] }
     - { role: users, tags: ['users'] }
     - { role: common_software, tags: ['common_software'] }
