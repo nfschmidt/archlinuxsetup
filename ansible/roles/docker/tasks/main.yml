@@ -29,3 +29,7 @@
     append: yes
     groups: docker
 
+- name: Install xauth to share display to containers
+  pacman:
+    name: xorg-xauth
+    state: present
