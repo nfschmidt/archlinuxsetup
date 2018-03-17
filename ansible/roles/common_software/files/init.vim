@@ -10,6 +10,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'elixir-lang/vim-elixir'
 Plug 'rust-lang/rust.vim'
 Plug 'mattn/emmet-vim'
+Plug 'fatih/vim-go'
 
 " Checkers
 Plug 'vim-syntastic/syntastic'
@@ -19,6 +20,10 @@ Plug 'joshdick/onedark.vim'
 
 " Status bar
 Plug 'itchyny/lightline.vim'
+
+" Auto completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
 
 call plug#end()
 
@@ -46,6 +51,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_html_checkers = ['validator']
 
 
+" golang configuration
+"" goimports on save
+let g:go_fmt_command = "goimports"
+
 
 " Emmet configuration
 "" Enable only with html and css
@@ -70,4 +79,5 @@ autocmd Filetype html,css setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype yml,yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype sh setlocal ts=4 sts=4 sw=4 expandtab
+autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
 

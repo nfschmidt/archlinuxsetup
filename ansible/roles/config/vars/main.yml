@@ -13,7 +13,7 @@ window_manager: i3
 #######################################
 # Virtualization configurations
 #######################################
-docker_host: yes
+containers_host: yes
 kvm_host: no
 kvm_guest: no
 virtualbox_host: yes

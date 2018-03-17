@@ -34,3 +34,17 @@
     - qt4
     - vlc
     - alsa-utils
+
+- name: Install system utils
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - unetbootin
+
+- name: Install secrets related software
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - keepassx

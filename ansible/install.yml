@@ -2,13 +2,14 @@
 - hosts: localhost
   connection: local
   remote_user: root
+  gather_facts: no
   roles:
     - config
     - { role: upgrade, tags: ['upgrade'], when: 'upgrade' }
     - { role: system_configs, tags: ['system_configs'] }
     - { role: users, tags: ['users'] }
     - { role: common_software, tags: ['common_software'] }
-    - { role: docker, tags: ['docker'], when: 'docker_host' }
+    - { role: containers, tags: ['containers'], when: 'containers_host' }
     - { role: python, tags: ['python'] }
     - { role: hacking_mode, tags: ['hacking_mode'], when: 'hacking_mode' }
     - { role: gui_software, tags: ['gui_software', 'graphical_mode'], when: 'graphical_mode' }

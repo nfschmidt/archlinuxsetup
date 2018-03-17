@@ -17,3 +17,9 @@
     - vboxnetadp
     - vboxnetflt
     - vboxpci
+
+- name: Add user to virtual box groups
+  user:
+    name: '{{ username }}'
+    group: vboxusers
+    append: yes

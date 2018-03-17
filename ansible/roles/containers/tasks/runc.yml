@@ -1,0 +1,4 @@
+- name: install runc
+  pacman:
+    name: runc
+    state: present

@@ -30,6 +30,15 @@
     dest: '{{user_home}}/.config/nvim/init.vim'
   register: neovim
 
+- name: Install deoplete dependencies
+  pip:
+    name: neovim
+    state: present
+
 - name: Install plugins
   command: 'nvim +PlugInstall +qall'
+  when: neovim.changed
+
+- name: Install plugins
+  command: 'nvim +UpdateRemotePlugins +qall'
   when: neovim.changed
