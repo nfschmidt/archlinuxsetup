@@ -42,3 +42,8 @@
 - name: Install plugins
   command: 'nvim +UpdateRemotePlugins +qall'
   when: neovim.changed
+
+- name: Install xclip for clipboard operations
+  pacman:
+    name: xclip
+    state: present
