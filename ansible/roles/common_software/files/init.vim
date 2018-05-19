@@ -81,3 +81,22 @@ autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype sh setlocal ts=4 sts=4 sw=4 expandtab
 autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
 
+
+" Key bindings
+let mapleader = " "
+
+"" Copy / paste system clipboard
+noremap <leader>y "+y
+noremap <leader>p "+p
+
+"" Windows movement
+noremap <leader>h :wincmd h<CR>
+noremap <leader>j :wincmd j<CR>
+noremap <leader>k :wincmd k<CR>
+noremap <leader>l :wincmd l<CR>
+
+"" Windows management
+noremap <leader>H :wincmd H<CR>
+noremap <leader>J :wincmd J<CR>
+noremap <leader>K :wincmd K<CR>
+noremap <leader>L :wincmd L<CR>
