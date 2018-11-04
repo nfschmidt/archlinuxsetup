@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  connection: local
+  remote_user: root
+  gather_facts: yes
+  roles:
+    - config
+    - { role: containers, tags: ['containers'], when: 'containers_host' }
